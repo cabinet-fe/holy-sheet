@@ -1,53 +1,36 @@
+import { CELL_RIGHT_CLICK, SELECTION_CHANGE } from '@holy-sheet/events'
 // 基础示例
-import { Workbook } from "holy-sheet";
-import { CELL_RIGHT_CLICK, SELECTION_CHANGE } from "@holy-sheet/events";
+import { Workbook } from 'holy-sheet'
 // import { CellConfigPlugin } from '@holy-sheet/plugins'
 
-const wb = new Workbook("销售数据", {
+const wb = new Workbook('销售数据', {
   /**
    * 模式, 只读模式
    * 可选项:
    * - 'view': 只读模式
    * - 'edit': 编辑模式
    */
-  mode: "view",
+  mode: 'view',
 
   /**
    * 工作表列表配置
    */
   sheets: [
     {
-      name: "sheet1",
+      name: 'sheet1',
       // 列配置
-      columns: {
-        A: {
-          width: 100,
-        },
-        D: {
-          width: 120,
-        },
-      },
+      columns: { A: { width: 100 }, D: { width: 120 } },
       // 稀疏矩阵存储
-      cellData: {
-        "0": {
-          "0": {
-            v: "Hello, World!",
-          },
-        },
-      },
+      cellData: { '0': { '0': { v: 'Hello, World!' } } }
     },
-    {
-      name: "sheet2",
-      columns: [],
-      rows: [],
-    },
-  ],
-});
+    { name: 'sheet2', columns: [], rows: [] }
+  ]
+})
 
 const CellConfigPlugin = function () {
   return {
     // 必须唯一
-    name: "cell-config",
+    name: 'cell-config',
     // 版本号，兼容性相关
     version: 1,
     // 依赖的插件
@@ -65,7 +48,7 @@ const CellConfigPlugin = function () {
      * - 'dialog': 对话框
      * - 'notification': 通知
      */
-    type: "menu",
+    type: 'menu',
     // 菜单项
     menuConfig: {},
 
@@ -73,13 +56,13 @@ const CellConfigPlugin = function () {
     onCreate(wb) {
       // 添加右键
       wb.on(CELL_RIGHT_CLICK, (e) => {
-        wb.getSheet(e.sheet.index);
-      });
+        wb.getSheet(e.sheet.index)
+      })
 
       // 选区变化事件
-      wb.on(SELECTION_CHANGE, (e) => {});
-    },
-  };
-};
+      wb.on(SELECTION_CHANGE, (e) => {})
+    }
+  }
+}
 
-wb.use(CellConfigPlugin());
+wb.use(CellConfigPlugin())
